@@ -1,6 +1,5 @@
 const Funcionario = require('../models/Funcionario')
 const CryptoJS = require("crypto-js");
-const Motorista = require('../models/Motorista');
 const CHAVE_SECRETA = 'LOW_KEY'
 
 const cadastrar = async (req,res) =>{
@@ -39,7 +38,7 @@ const listar = async (req,res) =>{
         });
         return res.status(201).json(resultado)
     } catch (err) {
-        return res.status(500).json({message: 'ocorreu um problema ao cadastrar o funcionário!'})
+        return res.status(500).json({message: 'ocorreu um problema ao listar o funcionário!'})
     }
 }
 

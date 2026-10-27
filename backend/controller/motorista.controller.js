@@ -45,7 +45,7 @@ const listar = async (req,res) =>{
         });
         return res.status(201).json(resultado)
     } catch (err) {
-        return res.status(500).json({message: 'ocorreu um problema ao cadastrar o funcionário!'})
+        return res.status(500).json({message: 'ocorreu um problema ao listar o Motorista!'})
     }
 }
 
@@ -53,7 +53,7 @@ const consultar = async (req,res) =>{
     const id = req.params.id
     try {
         const motorista = await Motorista.findByPk(id)
-        if(!Motorista){
+        if(!motorista){
             return res.status(422).json({message: 'O motorista não foi encontrado!'})
         }
 
@@ -70,7 +70,7 @@ const consultar = async (req,res) =>{
         }
         return res.status(201).json(payload)
     } catch (err) {
-        return res.status(500).json({message: 'ocorreu um problema ao cadastrar o funcionário!'})
+        return res.status(500).json({message: 'ocorreu um problema ao Consultar o Motorista!'})
     }
 }
 
@@ -78,7 +78,7 @@ const consultarNome = async (req,res) =>{
     const nome = req.params.nome
     try {
         const motorista = await Motorista.findOne({where: {nome: nome}})
-        if(!Motorista){
+        if(!motorista){
             return res.status(422).json({message: 'O motorista não foi encontrado!'})
         }
 
@@ -95,8 +95,48 @@ const consultarNome = async (req,res) =>{
         }
         return res.status(201).json(payload)
     } catch (err) {
-        return res.status(500).json({message: 'ocorreu um problema ao cadastrar o funcionário!'})
+        return res.status(500).json({message: 'ocorreu um problema ao Consultar o Motorista!'})
     }
 }
 
-module.exports = { cadastrar , listar , consultar , consultarNome }
+const atualizar = async (req,res) =>{
+    const id = req.params.id
+    const valores = req.body
+    try {
+        const motorista = await Motorista.findByPk(id)
+        if(!motorista){
+            return res.status(422).json({message: 'O motorista não foi encontrado!'})
+        }
+
+        if(valores.CNH){
+            const CNH = CryptoJS.AES.encrypt(valores.CNH, CHAVE_SECRETA).toString();
+            valores.CNH = CNH
+        }
+        if(valores.CPF){
+            const CPF = CryptoJS.AES.encrypt(valores.CPF, CHAVE_SECRETA).toString();
+            valores.CPF = CPF
+        }
+
+        await Motorista.update(valores,{where: {codMotorista: id}})
+        return res.status(201).json({message: 'Motorista atualizado com sucesso!'})
+    } catch (err) {
+        return res.status(500).json({message: 'ocorreu um problema ao atualizar o Motorista!'})
+    }
+}
+
+const apagar = async (req,res) =>{
+    const id = req.params.id
+    try {
+        const motorista = await Motorista.findByPk(id)
+        if(!motorista){
+            return res.status(422).json({message: 'O motorista não foi encontrado!'})
+        }
+
+        await Motorista.destroy({where: {codMotorista: id}})
+        return res.status(201).json({message: 'Motorista atualizado com sucesso!'})
+    } catch (err) {
+        return res.status(500).json({message: 'ocorreu um problema ao apagar o Motorista!'})
+    }
+}
+
+module.exports = { cadastrar , listar , consultar , consultarNome , atualizar , apagar }

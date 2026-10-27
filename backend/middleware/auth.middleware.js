@@ -31,4 +31,4 @@ async function authMiddleware(req,res,next){
     }
 }
 
-authMiddleware()
+module.exports = authMiddleware

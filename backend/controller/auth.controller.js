@@ -34,13 +34,13 @@ const login = async (req,res) =>{
         
         const token = CryptoJS.AES.encrypt(payload, CHAVE_SECRETA).toString();
         
-        
         return res.status(200).json({
             message: 'Usuário logado com sucesso!!',
             token: token,
             nome: funcionario.nome
         })
     } catch (err) {
+        console.error(err)
         return res.status(500).json({message: 'ocorreu um problema ao fazer login!'})
     }
 }
