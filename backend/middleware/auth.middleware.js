@@ -22,7 +22,7 @@ async function authMiddleware(req,res,next){
             return res.status(403).json({message: 'Tempo de sessão expirado!'})
         }
         
-        res.usuario = payload
+        req.usuario = payload
         
         next()   
     } catch (err) {

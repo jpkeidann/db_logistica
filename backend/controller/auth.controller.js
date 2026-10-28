@@ -32,7 +32,7 @@ const login = async (req,res) =>{
             expiraEm: expiraEm
         }
         
-        const token = CryptoJS.AES.encrypt(payload, CHAVE_SECRETA).toString();
+        const token = CryptoJS.AES.encrypt(JSON.stringify(payload), CHAVE_SECRETA).toString();
         
         return res.status(200).json({
             message: 'Usuário logado com sucesso!!',

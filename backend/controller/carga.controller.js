@@ -9,7 +9,7 @@ const cadastrar = async (req,res) =>{
             return res.status(422).json({message: 'Preencha todos os campos!'})
         }
         
-        const motorista = await Motorista.findByPk(valores.idCarga)
+        const motorista = await Motorista.findByPk(valores.idMotorista)
         
         if(!motorista){
             return res.status(404).json({message: 'Não foi possível encontrar o motorista!'})

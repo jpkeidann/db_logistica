@@ -41,7 +41,7 @@ app.get('/entregas', entregaController.listar)
 app.put('/entrega/:id', entregaController.atualizar)
 
 app.post('/carga', cargaController.cadastrar)
-app.get('/carga', cargaController.listar)
+app.get('/cargas', cargaController.listar)
 
 app.post('/motorista', motoristaController.cadastrar)
 app.get('/motoristas', motoristaController.listar)

@@ -37,6 +37,7 @@ const listar = async (req,res) =>{
             const bytes2  = CryptoJS.AES.decrypt(el.CPF, CHAVE_SECRETA);
             const CPF = bytes2.toString(CryptoJS.enc.Utf8);
             resultado.push({
+                codMotorista: el.codMotorista,
                 nome: el.nome,
                 CNH: CNH,
                 CPF: CPF,
@@ -63,6 +64,7 @@ const consultar = async (req,res) =>{
         const CPF = bytes2.toString(CryptoJS.enc.Utf8);
 
         const payload = {
+            codMotorista: motorista.codMotorista,
             nome: motorista.nome,
             CNH: CNH,
             CPF: CPF,
@@ -81,13 +83,14 @@ const consultarNome = async (req,res) =>{
         if(!motorista){
             return res.status(422).json({message: 'O motorista não foi encontrado!'})
         }
-
+        
         const bytes  = CryptoJS.AES.decrypt(motorista.CNH, CHAVE_SECRETA);
         const CNH = bytes.toString(CryptoJS.enc.Utf8);
         const bytes2  = CryptoJS.AES.decrypt(motorista.CPF, CHAVE_SECRETA);
         const CPF = bytes2.toString(CryptoJS.enc.Utf8);
-
+        
         const payload = {
+            codMotorista: motorista.codMotorista,
             nome: motorista.nome,
             CNH: CNH,
             CPF: CPF,
@@ -133,7 +136,7 @@ const apagar = async (req,res) =>{
         }
 
         await Motorista.destroy({where: {codMotorista: id}})
-        return res.status(201).json({message: 'Motorista atualizado com sucesso!'})
+        return res.status(201).json({message: 'Motorista Apagado com sucesso!'})
     } catch (err) {
         return res.status(500).json({message: 'ocorreu um problema ao apagar o Motorista!'})
     }

@@ -5,7 +5,7 @@ const cadastrar = async (req,res) =>{
     const valores = req.body
 
     try {
-        if(!valores.cidadeDestino || !valores.status || !valores.data || !valores.idCarga){
+        if(!valores.cidadeDestino || !valores.status || !valores.data || !valores.hora || !valores.idCarga){
             return res.status(422).json({message: 'Preencha todos os campos!'})
         }
         
